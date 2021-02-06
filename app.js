@@ -1,5 +1,5 @@
 const loc = document.getElementById("jsCanvas");
-let ctx = loc.getContext("2d");       
+const ctx = loc.getContext("2d");       
 
 const colors = document.getElementsByClassName("controls__color");
 const brushsize = document.getElementById("range");
@@ -7,10 +7,18 @@ const brushsize = document.getElementById("range");
 const fill = document.getElementById("fill");
 const save = document.getElementById("save");
 
+console.log(ctx);
+
 loc.width = 1000;
 loc.height = 800;
 
 let onpoint = false;
+
+function background(){
+    loc.style.backgroundColor = ctx.strokeStyle;
+    ctx.fillStyle= ctx.strokeStyle;
+    ctx.fillRect(0,0,1000,800);
+}
 
 function download(event){
     const img = loc.toDataURL();
@@ -51,5 +59,5 @@ function strPaint(event){
     loc.addEventListener("mouseup", stop);
     Array.from(colors).forEach(color => color.addEventListener("click", changecolor));
     brushsize.onchange = function(){ let size = brushsize.value; ctx.lineWidth =size; console.log(brushsize.value)}
-    fill.addEventListener("click", function(){loc.style.backgroundColor = ctx.strokeStyle; cxt.fillstyle= "ctx.strokeStyle";});
+    fill.addEventListener("click", background);
     save.addEventListener("click", download );
