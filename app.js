@@ -1,20 +1,28 @@
 const loc = document.getElementById("jsCanvas");
 let ctx = loc.getContext("2d");       
 
-const colors = document.getElementsByClassName("controls__color")
-console.log(colors);
+const colors = document.getElementsByClassName("controls__color");
+const brushsize = document.getElementById("range");
 
+const fill = document.getElementById("fill");
+const save = document.getElementById("save");
 
 loc.width = 1000;
 loc.height = 800;
 
 let onpoint = false;
 
+function download(event){
+    const img = loc.toDataURL();
+    const link = document.createElement("a");
+    link.href = img;
+    link.download = "PaintJs"
+    link.click();    
+}
+
 function changecolor(event){
     const brushcolor = event.target.style.backgroundColor;
     ctx.strokeStyle = brushcolor;
-    ctx.lineWidth = 1;
-    console.log(brushcolor);
 }
 
 function stop(event){
@@ -42,3 +50,6 @@ function strPaint(event){
     loc.addEventListener("mouseleave", stop);
     loc.addEventListener("mouseup", stop);
     Array.from(colors).forEach(color => color.addEventListener("click", changecolor));
+    brushsize.onchange = function(){ let size = brushsize.value; ctx.lineWidth =size; console.log(brushsize.value)}
+    fill.addEventListener("click", function(){loc.style.backgroundColor = ctx.strokeStyle; cxt.fillstyle= "ctx.strokeStyle";});
+    save.addEventListener("click", download );
